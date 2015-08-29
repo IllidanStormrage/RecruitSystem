@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 
-class IndexController extends BaseController {
+class LoginController extends BaseController {
 	private $studentNum = '';
 	private $password = '';
     public function index(){
@@ -11,11 +11,11 @@ class IndexController extends BaseController {
         $this->_getInfo();
     }
 
-    private function(){
+    private function _getInfo(){
     	$cinfo = M('users');
     	$nowtime = time();
-    	session('testnum') = '0';
-    	$condition(['studentnum'] = $this->studentNum;
+    	session('testnum' , 0) ;
+    	$condition['studentnum'] = $this->studentNum;
     	$condition['password'] = $this->password;
     	$stu = $cinfo->where($condition)->find();
     	if($cinfo){
@@ -24,21 +24,21 @@ class IndexController extends BaseController {
     		$cinfo->where($condition)->save($content);
     	}elseif(session('testnum') == 5){
     		if(!session('?lasttime')){
-    			session('lasttime') = $nowtime;
-    		}elseif{$nowtime - session('lasttime') < 600}{
+    			session('lasttime',$nowtime);
+    		}elseif($nowtime - session('lasttime') < 600){
     			echo 0;
     		}else{
-    			session('testnum') = 0;
+    			session('testnum', 0) ;
     		}
     	}else{
-    		session('testnum') = session('testnum') + 1;
+    		session('testnum' , (session('testnum') + 1) );
     	}
     }
     
     private function initSession($stu){
-    	session('name') = $stu['name'];
-    	session('studentnum') = $stu['studentnum'];
-    	session('gender') = $stu['gender'];
+    	session('name', $stu['name']) ;
+    	session('studentnum', $stu['studentnum']) ;
+    	session('gender' ,$stu['gender']);
 
     }
 
